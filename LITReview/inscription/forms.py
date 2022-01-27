@@ -23,3 +23,8 @@ class FollowForm(forms.Form):
     username = forms.CharField(
         widget=forms.TextInput(attrs={'placeholder': 'Nom d\'utilisateur', 'size': '40px', 'class': 'text-center'}, ),
         label='')
+
+class TicketForm(forms.Form):
+    title = forms.CharField(max_length=128, widget=forms.TextInput(attrs={'size' : '100px'}))
+    description = forms.CharField(max_length=2048, widget=forms.Textarea(attrs={'cols': '100'}))
+    image = forms.ImageField()

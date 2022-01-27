@@ -1,4 +1,19 @@
 {% extends 'inscription/base.html' %}
 {% block content %}
-<h1>FLUX</h1>
+
+    <div class="d-flex flex-column">
+        <h1>FLUX</h1>
+            {% for i in tickets %}
+            <div class="">
+                <h1>{{ i.title }}</h1>
+                <p> {{ i.description }} </p>
+
+                {% if i.image %}
+                <img src="{{ i.image.url }}">
+                {% endif %}
+            </div>
+            {% endfor %}
+    </div>
+
+
 {% endblock %}

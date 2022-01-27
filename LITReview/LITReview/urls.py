@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from inscription import views
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accueil/', views.login_user, name='accueil'),
@@ -23,4 +26,8 @@ urlpatterns = [
     path('flux/', views.flux),
     path('accueil/inscription/', views.inscription),
     path('abonnements/', views.abonnements),
+    path('create_ticket/', views.create_ticket)
 ]
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
