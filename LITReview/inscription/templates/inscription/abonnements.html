@@ -1,0 +1,46 @@
+{% extends 'inscription/base.html' %}
+{% block content %}
+<div class="d-flex flex-column">
+
+    <div>
+        <h1>Suivre d'autres utilisateurs</h1>
+        <div>
+            <form method="post">
+
+                {{ form }}
+                    {% csrf_token %}
+
+                        <button type="submit" class="btn btn-primary mx-3 mb-1" >Envoyer</button>
+
+            </form>
+             <p>{{ message }}</p>
+        </div>
+    </div>
+    <div>
+        <h1>Abonnement</h1>
+
+        <ul>
+
+            {% for i in follow %}
+            <li>
+                <p>{{ i.followed_user }}</p>
+            </li>
+            {% endfor %}
+
+        </ul>
+    </div>
+    <div>
+        <h1>Abonnés</h1>
+        <ul>
+
+            {% for i in followed_by %}
+            <li>
+                <p>{{ i.user }}</p>
+            </li>
+            {% endfor %}
+
+
+        </ul>
+    </div>
+</div>
+{% endblock %}
