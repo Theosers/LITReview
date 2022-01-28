@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from . import forms
 from django.contrib.auth import login, authenticate, logout
 from inscription.models import UserFollows, User, Ticket
+from django.core.paginator import Paginator
 
 def logout_user(request):
     logout(request)
@@ -75,4 +76,11 @@ def create_ticket(request):
 def flux(request):
     tickets = Ticket.objects.all()
 
-    return render(request, 'inscription/flux.html', context= {'tickets' : tickets})
+    paginator = Paginator(tickets, 2)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    for page in page_obj:
+        print(page.image)
+
+    return render(request, 'inscription/flux.html', context= {'tickets' : tickets, 'page_obj': page_obj})

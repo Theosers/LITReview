@@ -3,17 +3,38 @@
 
     <div class="d-flex flex-column">
         <h1>FLUX</h1>
-            {% for i in tickets %}
-            <div class="">
-                <h1>{{ i.title }}</h1>
-                <p> {{ i.description }} </p>
+            {% for page in page_obj %}
+        <div class="border px-5 py-5 my-2 w-100">
+             <h1>{{ page.title }}</h1>
+             <p> {{ page.description }} </p>
 
-                {% if i.image %}
-                <img src="{{ i.image.url }}">
-                {% endif %}
-            </div>
-            {% endfor %}
+             {% if page.image %}
+             <img src="{{ page.image.url }}">
+             {% endif %}
+        </div>
+    {% endfor %}
+
+
+        <span>
+        {% if page_obj.has_previous %}
+            <a href="?page=1">« première</a>
+            <a href="?page={{ page_obj.previous_page_number }}">précédente</a>
+        {% endif %}
+
+        <span>
+            Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}.
+
+        </span>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">suivante</a>
+
+            <a href="?page={{ page_obj.paginator.num_pages }}">dernière »</a>
+        {% endif %}
+    </span>
+
     </div>
+
+
 
 
 {% endblock %}
