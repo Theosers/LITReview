@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'inscription',
+    'crispy_forms',
 ]
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -127,3 +129,4 @@ AUTH_USER_MODEL = 'inscription.User'
 
 MEDIA_URL = ''
 MEDIA_ROOT = BASE_DIR / "media/"
+LOGIN_URL = 'accueil'

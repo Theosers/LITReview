@@ -1,5 +1,5 @@
 from django import forms
-
+from inscription.models import Ticket, Review
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 
@@ -24,7 +24,21 @@ class FollowForm(forms.Form):
         widget=forms.TextInput(attrs={'placeholder': 'Nom d\'utilisateur', 'size': '40px', 'class': 'text-center'}, ),
         label='')
 
-class TicketForm(forms.Form):
-    title = forms.CharField(max_length=128, widget=forms.TextInput(attrs={'size' : '100px'}))
-    description = forms.CharField(max_length=2048, widget=forms.Textarea(attrs={'cols': '100'}))
-    image = forms.ImageField()
+class TicketForm(forms.ModelForm):
+    #title = forms.CharField(max_length=128, widget=forms.TextInput(attrs={'size' : '100px'}))
+    #description = forms.CharField(max_length=2048, widget=forms.Textarea(attrs={'cols': '100'}))
+    #image = forms.ImageField(required=False)
+
+    class Meta:
+        model = Ticket
+        fields = ("title", "description", "image")
+
+
+class ReviewForm(forms.ModelForm):
+    #headline = forms.CharField(max_length=128, widget=forms.TextInput(attrs={'size' : '100px'}))
+    #rating = forms.ChoiceField(widget=forms.RadioSelect(attrs={'class' : 'form-check form-check-inline'}), choices=[('0', '0'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')])
+    #body = forms.CharField(max_length=8192, widget=forms.Textarea(attrs={'cols': '100'}))
+    class Meta:
+        model = Review
+        fields = ("headline", "rating", "body")
+

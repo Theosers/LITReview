@@ -18,23 +18,34 @@
     </div>
     <div>
         <h1>Abonnement</h1>
-        <ul>
+        <table class="table table-striped border">
             {% for i in follow %}
-            <li>
-                <p>{{ i.followed_user }}</p>
-            </li>
+             <tr>
+                  <td>{{ i.followed_user }}</td>
+                  <td class="text-end">
+                      <form action="{% url 'abonnements' %}" method="post" >
+                          <input type="hidden" value="{{ i.pk }}" name="pk">
+                          <button type="submit" class=" btn-danger mx-3 ">Désabonner</button>
+                          {% csrf_token %}
+                      </form>
+                  </td>
+
+
+              </tr>
             {% endfor %}
-        </ul>
+        </table>
     </div>
     <div>
         <h1>Abonnés</h1>
-        <ul>
-            {% for i in followed_by %}
-            <li>
-                <p>{{ i.user }}</p>
-            </li>
-            {% endfor %}
-        </ul>
+          <table class="table table-striped border">
+              {% for i in followed_by %}
+              <tr>
+                  <td>{{ i.user }}</td>
+              </tr>
+              {% endfor %}
+          </table>
     </div>
+
+
 </div>
 {% endblock %}

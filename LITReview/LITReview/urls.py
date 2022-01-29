@@ -23,10 +23,15 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accueil/', views.login_user, name='accueil'),
     path('logout/', views.logout_user, name='logout'),
-    path('flux/', views.flux),
+    path('flux/', views.flux, name='flux'),
     path('accueil/inscription/', views.inscription),
-    path('abonnements/', views.abonnements),
-    path('create_ticket/', views.create_ticket)
+    path('abonnements/', views.abonnements, name='abonnements'),
+    path('create_ticket/', views.create_ticket, name='create_ticket'),
+    path('my_posts', views.my_posts, name='my_posts'),
+    path('create_review/', views.create_review, name='create_review'),
+    path('modif_ticket/', views.modif_ticket, name='modif_ticket'),
+    path('modif_review/', views.modif_review, name='modif_review'),
+    path('create_review_answer/', views.create_review_answer, name='create_review_answer')
 ]
 if settings.DEBUG:
     urlpatterns += static(

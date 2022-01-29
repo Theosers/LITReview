@@ -1,21 +1,53 @@
 {% extends 'inscription/base.html' %}
 {% block content %}
 
-    <div class="d-flex flex-column">
-        <h1>FLUX</h1>
-            {% for page in page_obj %}
-        <div class="border px-5 py-5 my-2 w-100">
-             <h1>{{ page.title }}</h1>
-             <p> {{ page.description }} </p>
+<div class="d-flex flex-column">
+    <div>
+        <a class="btn btn-primary mt-3" href={% url 'create_ticket' %}>Demander une critique</a>
+        <a class="btn btn-primary mt-3" href={% url 'create_review' %}>Créer une critique</a>
+    </div>
 
-             {% if page.image %}
-             <img src="{{ page.image.url }}">
-             {% endif %}
+    <h1>Flux </h1>
+    {% for post in page_obj %}
+    {% if post.content_type == 'TICKET' %}
+    <div class="border px-5 py-5 my-2 w-100">
+        <h1>{{ post.title }}</h1>
+        <p> {{ post.description }} </p>
+
+        {% if post.image %}
+        <img src="{{ post.image.url }}">
+        {% endif %}
+
+        {% if not ticket_answer%}
+            {% if post.user != request.user %}
+            <form action="{% url 'create_review_answer' %}" method="get">
+                <input type="hidden" value="{{ post.pk }}" name="ticket">
+                <button type="submit" class=" btn btn-primary mt-3  ">Créer une critique</button>
+                {% csrf_token %}
+            </form>
+            {% endif %}
+        {% endif %}
+
+
+
+    </div>
+    {% elif post.content_type == 'REVIEW' %}
+    <div class="d-flex flex-column  border ">
+        <h1>{{ post.headline }}</h1>
+        <p> {{ post.body }} </p>
+        <div class="w-50 align-self-center border  ">
+            <h4>{{ post.ticket.title }}</h4>
+            <p> {{ post.ticket.description }} </p>
+            {% if post.ticket.image %}
+            <img class="w-50" src="{{ post.ticket.image.url }}">
+            {% endif %}
         </div>
+    </div>
+    {% endif %}
     {% endfor %}
 
 
-        <span>
+    <span>
         {% if page_obj.has_previous %}
             <a href="?page=1">« première</a>
             <a href="?page={{ page_obj.previous_page_number }}">précédente</a>
@@ -32,9 +64,7 @@
         {% endif %}
     </span>
 
-    </div>
-
-
+</div>
 
 
 {% endblock %}
