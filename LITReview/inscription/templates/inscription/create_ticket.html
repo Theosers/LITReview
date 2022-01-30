@@ -1,0 +1,17 @@
+{% extends 'inscription/base.html' %}
+{% block content %}
+<div class="d-flex flex-column">
+    <h1 class="text-center mb-5">Créer un ticket</h1>
+
+    <form method="post" enctype="multipart/form-data">>
+        {{ form.as_p }}
+        {% csrf_token %}
+        <div class="text-end">
+            <button type="submit" class="btn btn-primary mt-3" >Envoyer</button>
+            </div>
+
+    </form>
+</div>
+{% endblock %}
+
+

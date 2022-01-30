@@ -1,0 +1,30 @@
+{% extends 'inscription/base.html' %}
+{% block content %}
+
+
+<div class="d-flex flex-column">
+
+    <form method="post" enctype="multipart/form-data">
+        <div class="border p-3">
+            <h1>{{ ticket_reviewed.title}}</h1>
+            <p>{{ ticket_reviewed.description }}</p>
+            {% if ticket_reviewed.image %}
+            <img src="{{ ticket_reviewed.image.url }}">
+            {% endif %}
+        </div>
+
+        <div class="border p-3">
+            <h1>critique</h1>
+            {{ review_form.as_p }}
+            {% csrf_token %}
+            <div class="text-end">
+                <button type="submit" class="btn btn-primary mt-3">Envoyer</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'inscription/base.html' %}
+{% block content %}
+
+<div class="d-flex flex-column">
+    <h1>My_posts </h1>
+    {% for post in page_obj %}
+    {% if post.content_type == 'TICKET' %}
+    <div class="border px-5 py-5 my-2 w-100">
+        <h1>{{ post.title }}</h1>
+        <p> {{ post.description }} </p>
+
+        {% if post.image %}
+        <img src="{{ post.image.url }}">
+        {% endif %}
+        <div class="d-flex justify-content-end">
+            <form action="{% url 'my_posts' %}" class="pe-2" method="post">
+                <input type="hidden" value="{{ post.pk }}" name="pk_modif_ticket">
+                <button type="submit" class=" btn btn-primary mt-3  ">Modifer</button>
+                {% csrf_token %}
+            </form>
+            <form action="{% url 'my_posts' %}" method="post">
+                <input type="hidden" value="{{ post.pk }}" name="pk_delete_ticket">
+                <button type="submit" class=" btn btn-primary mt-3  ">Supprimer</button>
+                {% csrf_token %}
+            </form>
+        </div>
+    </div>
+    {% elif post.content_type == 'REVIEW' %}
+    <div class="d-flex flex-column  border ">
+        <h1>{{ post.headline }}</h1>
+        <p> {{ post.body }} </p>
+
+        <div class="w-50 align-self-center border  ">
+            <h4>{{ post.ticket.title }}</h4>
+            <p> {{ post.ticket.description }} </p>
+            {% if post.ticket.image %}
+            <img class="w-50" src="{{ post.ticket.image.url }}">
+            {% endif %}
+
+        </div>
+        <div class="text-end">
+            <div class="d-flex justify-content-end">
+                <form action="{% url 'my_posts' %}" class="pe-2" method="post">
+                    <input type="hidden" value="{{ post.pk }}" name="pk_modif_review">
+                    <button type="submit" class=" btn btn-primary mt-3  ">Modifer</button>
+                    {% csrf_token %}
+                </form>
+                <form action="{% url 'my_posts' %}" method="post">
+                    <input type="hidden" value="{{ post.pk }}" name="pk_delete_review">
+                    <button type="submit" class=" btn btn-primary mt-3  ">Supprimer</button>
+                    {% csrf_token %}
+                </form>
+            </div>
+        </div>
+
+        {% endif %}
+        {% endfor %}
+
+
+        <span>
+        {% if page_obj.has_previous %}
+            <a href="?page=1">« première</a>
+            <a href="?page={{ page_obj.previous_page_number }}">précédente</a>
+        {% endif %}
+
+        <span>
+            Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}.
+
+        </span>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">suivante</a>
+
+            <a href="?page={{ page_obj.paginator.num_pages }}">dernière »</a>
+        {% endif %}
+    </span>
+
+    </div>
+
+
+    {% endblock %}
