@@ -1,19 +1,18 @@
 {% extends 'inscription/base.html' %}
 {% block content %}
 
-    <div>
-        <form method="post" enctype="multipart/form-data">>
-            {{ ticket_form.as_p}}
-            {% csrf_token %}
-            <div class="text-end">
-                <button type="submit" class="btn btn-primary mt-3" >Envoyer</button>
-            </div>
+<div class="d-flex flex-column" style="width:90%;">
+    <h1 class="text-center mb-5">Modifier votre ticket</h1>
+    {% load crispy_forms_tags %}
+    <form method="post" enctype="multipart/form-data">
+        {{ ticket_form|crispy }}
+        {% csrf_token %}
+        <div class="text-end">
+            <button type="submit" class="btn btn-primary mt-3">Envoyer</button>
+        </div>
 
-        </form>
-    </div>
-
-
-
+    </form>
+</div>
 
 
 {% endblock %}

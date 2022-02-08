@@ -2,25 +2,39 @@
 {% block content %}
 
 
-<div class="d-flex flex-column">
+<div class="d-flex flex-column " style="width:90%;">
 
-    <form method="post" enctype="multipart/form-data">
-        <div class="border p-3">
-            <h1>{{ ticket_reviewed.title}}</h1>
-            <p>{{ ticket_reviewed.description }}</p>
-            {% if ticket_reviewed.image %}
-            <img src="{{ ticket_reviewed.image.url }}">
-            {% endif %}
+    <form  method="post" enctype="multipart/form-data">
+        <input type="hidden" value="{{ ticket_reviewed.pk }}" name="pk_mod_ticket">
+        <div class="border p-5">
+            <p>Vous êtes en train de poster en réponse à</p>
+        <div class="border w-50 " style="margin: 0 auto;">
+            <div >
+             <p class="d-inline-flex">{{ ticket_reviewed.user }} a demandé une critique</p>
+             <p class="d-inline-flex float-end mt-2 me-4">{% now "H:i, d M Y " %}</p>
+            </div>
+
+        <p>{{ ticket_reviewed.title }}</p>
+        <p>{{ ticket_reviewed.description }}</p>
+
+        {% if ticket_reviewed.image %}
+
+        <img class="ps-4 pb-2" style="width:20%;" src="{{ ticket_reviewed.image.url }}">
+        {% endif %}
+
         </div>
-
+            </div>
         <div class="border p-3">
             <h1>critique</h1>
             {{ review_form.as_p }}
-            {% csrf_token %}
+
             <div class="text-end">
+
                 <button type="submit" class="btn btn-primary mt-3">Envoyer</button>
+
             </div>
         </div>
+        {% csrf_token %}
     </form>
 
 </div>

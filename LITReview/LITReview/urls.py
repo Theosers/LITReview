@@ -24,7 +24,7 @@ urlpatterns = [
     path('accueil/', views.login_user, name='accueil'),
     path('logout/', views.logout_user, name='logout'),
     path('flux/', views.flux, name='flux'),
-    path('accueil/inscription/', views.inscription),
+    path('inscription/', views.inscription, name='inscription'),
     path('abonnements/', views.abonnements, name='abonnements'),
     path('create_ticket/', views.create_ticket, name='create_ticket'),
     path('my_posts', views.my_posts, name='my_posts'),

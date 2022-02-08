@@ -1,16 +1,20 @@
 {% extends 'inscription/base.html' %}
 {% block content %}
 
-<div class="d-flex flex-column">
-    <h1>My_posts </h1>
+<div class="d-flex flex-column" style="width:65%;">
+    <h1 class="text-center">Vo posts </h1>
     {% for post in page_obj %}
     {% if post.content_type == 'TICKET' %}
-    <div class="border px-5 py-5 my-2 w-100">
-        <h1>{{ post.title }}</h1>
-        <p> {{ post.description }} </p>
+
+    <div class="border my-2">
+        <div>
+            <p class="d-inline-flex">Vous avez publié une critique</p>
+            <p class="d-inline-flex float-end mt-2 me-4">{% now "H:i, d M Y " %}</p>
+        </div>
+        <p>{{ post.title }}</p>
 
         {% if post.image %}
-        <img src="{{ post.image.url }}">
+        <img class="ps-2 pb-2" src="{{ post.image.url }}" style="width:12%;">
         {% endif %}
         <div class="d-flex justify-content-end">
             <form action="{% url 'my_posts' %}" class="pe-2" method="post">
@@ -26,38 +30,58 @@
         </div>
     </div>
     {% elif post.content_type == 'REVIEW' %}
-    <div class="d-flex flex-column  border ">
-        <h1>{{ post.headline }}</h1>
-        <p> {{ post.body }} </p>
 
-        <div class="w-50 align-self-center border  ">
-            <h4>{{ post.ticket.title }}</h4>
-            <p> {{ post.ticket.description }} </p>
-            {% if post.ticket.image %}
-            <img class="w-50" src="{{ post.ticket.image.url }}">
-            {% endif %}
-
+    <div class="d-flex flex-column  border my-2">
+        <div>
+            <p class="d-inline-flex">Vous avez publié une critique</p>
+            <p class="d-inline-flex float-end mt-2 me-4">{% now "H:i, d M Y " %}</p>
         </div>
-        <div class="text-end">
-            <div class="d-flex justify-content-end">
-                <form action="{% url 'my_posts' %}" class="pe-2" method="post">
-                    <input type="hidden" value="{{ post.pk }}" name="pk_modif_review">
-                    <button type="submit" class=" btn btn-primary mt-3  ">Modifer</button>
-                    {% csrf_token %}
-                </form>
-                <form action="{% url 'my_posts' %}" method="post">
-                    <input type="hidden" value="{{ post.pk }}" name="pk_delete_review">
-                    <button type="submit" class=" btn btn-primary mt-3  ">Supprimer</button>
-                    {% csrf_token %}
-                </form>
+        <div>
+
+            <div>
+
+                <h4 class="d-inline-flex">{{ post.headline }} - </h4>
+                {% load star_filter %}
+                {% for star in 5|times %}
+
+                {% if star|add:"1" <= post.rating %}
+
+                <h4 class="d-inline-flex">&#9733;</h4>
+                {% else %}
+                <h4 class="d-inline-flex">&#9734;</h4>
+
+                {% endif %}
+                {% endfor %}
+                <p class=""> {{ post.body }} </p>
             </div>
-        </div>
+            <div class="align-self-center border ms-4 my-4" style="width:96%;">
+                <p>Ticket - {{ post.ticket.user }}</p>
+                <p>{{ post.ticket.title }}</p>
+                {% if post.ticket.image %}
+                <img class="ps-2 pb-2" style="width:12%;" src="{{ post.ticket.image.url }}">
+                {% endif %}
 
-        {% endif %}
-        {% endfor %}
+            </div>
+            <div class="text-end">
+                <div class="d-flex justify-content-end">
+                    <form action="{% url 'my_posts' %}" class="pe-2" method="post">
+                        <input type="hidden" value="{{ post.pk }}" name="pk_modif_review">
+                        <button type="submit" class=" btn btn-primary mt-3  ">Modifer</button>
+                        {% csrf_token %}
+                    </form>
+                    <form action="{% url 'my_posts' %}" method="post">
+                        <input type="hidden" value="{{ post.pk }}" name="pk_delete_review">
+                        <button type="submit" class=" btn btn-primary mt-3  ">Supprimer</button>
+                        {% csrf_token %}
+                    </form>
+                </div>
+            </div>
+
+            {% endif %}
+            {% endfor %}
 
 
-        <span>
+            <span>
         {% if page_obj.has_previous %}
             <a href="?page=1">« première</a>
             <a href="?page={{ page_obj.previous_page_number }}">précédente</a>
@@ -74,7 +98,7 @@
         {% endif %}
     </span>
 
-    </div>
+        </div>
 
 
-    {% endblock %}
+        {% endblock %}

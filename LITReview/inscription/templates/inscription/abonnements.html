@@ -1,11 +1,11 @@
 {% extends 'inscription/base.html' %}
 {% block content %}
-<div class="d-flex flex-column">
+<div class="d-flex flex-column" style="width:65%;">
 
     <div>
-        <h1>Suivre d'autres utilisateurs</h1>
+        <h1 class="text-center mb-3">Suivre d'autres utilisateurs</h1>
         <div>
-            <form method="post">
+            <form class="text-center mb-5" method="post">
 
                 {{ form }}
                 {% csrf_token %}
@@ -17,7 +17,7 @@
         </div>
     </div>
     <div>
-        <h1>Abonnement</h1>
+        <h1 class="text-center">Abonnement</h1>
         <table class="table table-striped border">
             {% for i in follow %}
              <tr>
@@ -36,7 +36,7 @@
         </table>
     </div>
     <div>
-        <h1>Abonnés</h1>
+        <h1 class="text-center">Abonnés</h1>
           <table class="table table-striped border">
               {% for i in followed_by %}
               <tr>

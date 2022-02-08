@@ -7,7 +7,6 @@ from itertools import chain
 from django.db.models import CharField, Value
 from django.contrib.auth.decorators import login_required
 
-
 def logout_user(request):
     logout(request)
     return redirect(login_user)
@@ -91,6 +90,8 @@ def create_ticket(request):
 
 @login_required
 def flux(request):
+
+
     ticket_answer=''
 
 
@@ -229,9 +230,13 @@ def modif_review(request):
 
 
 def create_review_answer(request):
-    ticket_reviewed = Ticket.objects.get(id=request.GET['ticket'])
+    #ticket_reviewed = Ticket.objects.all()[0]
+
     review_form = forms.ReviewForm()
     if request.method == 'POST':
+        print(request.POST.get('pk_mod_ticket'))
+        ticket_reviewed = Ticket.objects.get(id=request.POST.get('pk_mod_ticket'))
+
         review_form = forms.ReviewForm(request.POST)
         if review_form.is_valid():
             review = Review(headline=review_form.cleaned_data['headline'], body=review_form.cleaned_data['body'],

@@ -1,51 +1,77 @@
 {% extends 'inscription/base.html' %}
 {% block content %}
 
-<div class="d-flex flex-column">
-    <div>
-        <a class="btn btn-primary mt-3" href={% url 'create_ticket' %}>Demander une critique</a>
-        <a class="btn btn-primary mt-3" href={% url 'create_review' %}>Créer une critique</a>
+<div class="d-flex flex-column" style="width:65%;">
+    <div class="text-center">
+        <a class="btn btn-primary me-5 " href={% url 'create_ticket' %}>Demander une critique</a>
+        <a class="btn btn-primary ms-5" href={% url 'create_review' %}>Créer une critique</a>
     </div>
+    <div class="mt-3">
+        {% for post in page_obj %}
+        {% if post.content_type == 'TICKET' %}
+        <div class="border  ">
+            <div>
+                <p class="d-inline-flex">{{ post.user }} a demandé une critique</p>
+                <p class="d-inline-flex float-end mt-2 me-4">{% now "H:i, d M Y " %}</p>
+            </div>
 
-    <h1>Flux </h1>
-    {% for post in page_obj %}
-    {% if post.content_type == 'TICKET' %}
-    <div class="border px-5 py-5 my-2 w-100">
-        <h1>{{ post.title }}</h1>
-        <p> {{ post.description }} </p>
+            <p>{{ post.title }}</p>
+            <p>{{ post.description }}</p>
 
-        {% if post.image %}
-        <img src="{{ post.image.url }}">
-        {% endif %}
+            {% if post.image %}
+            <img class="ps-4 pb-2" style="width:12%;" src="{{ post.image.url }}">
+            {% endif %}
 
-        {% if not ticket_answer%}
+            {% if not ticket_answer%}
             {% if post.user != request.user %}
-            <form action="{% url 'create_review_answer' %}" method="get">
-                <input type="hidden" value="{{ post.pk }}" name="ticket">
-                <button type="submit" class=" btn btn-primary mt-3  ">Créer une critique</button>
+            <form action="{% url 'create_review_answer' %}" method="POST">
+                <div class="text-end me-4 mb-4 ">
+                    <input type="hidden" value="{{ post.pk }}" name="pk_mod_ticket">
+                    <button type="submit" class=" btn btn-primary rounded-3">Créer une critique</button>
+                </div>
                 {% csrf_token %}
             </form>
             {% endif %}
-        {% endif %}
-
-
-
-    </div>
-    {% elif post.content_type == 'REVIEW' %}
-    <div class="d-flex flex-column  border ">
-        <h1>{{ post.headline }}</h1>
-        <p> {{ post.body }} </p>
-        <div class="w-50 align-self-center border  ">
-            <h4>{{ post.ticket.title }}</h4>
-            <p> {{ post.ticket.description }} </p>
-            {% if post.ticket.image %}
-            <img class="w-50" src="{{ post.ticket.image.url }}">
             {% endif %}
-        </div>
-    </div>
-    {% endif %}
-    {% endfor %}
 
+
+        </div>
+        {% elif post.content_type == 'REVIEW' %}
+        <div class="d-flex flex-column  border my-2 ">
+            <div>
+                <p class="d-inline-flex">Vous avez publié une critique</p>
+                <p class="d-inline-flex float-end mt-2 me-4">{% now "H:i, d M Y " %}</p>
+            </div>
+            <div>
+
+                <h4 class="d-inline-flex">{{ post.headline }} - </h4>
+
+                {% load star_filter %}
+                {% for star in 5|times %}
+
+                {% if star|add:"1" <= post.rating %}
+
+                <h4 class="d-inline-flex">&#9733;</h4>
+                {% else %}
+                <h4 class="d-inline-flex">&#9734;</h4>
+
+                {% endif %}
+                {% endfor %}
+
+
+                <p class=""> {{ post.body }} </p>
+            </div>
+            <div class="align-self-center border  my-4" style="width:96%;">
+                <p>Ticket - {{ post.ticket.user }}</p>
+                <p>{{ post.ticket.title }}</p>
+                {% if post.ticket.image %}
+                <img class="ps-2 pb-2" style="width:12%;" src="{{ post.ticket.image.url }}">
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
 
     <span>
         {% if page_obj.has_previous %}
