@@ -46,18 +46,13 @@ class TicketForm(forms.ModelForm):
 
 
 class ReviewForm(forms.ModelForm):
-    # headline = forms.CharField(max_length=128, widget=forms.TextInput(attrs={'size' : '100px'}))
-    rating = forms.ChoiceField(widget=forms.RadioSelect(attrs={'class' : 'radioButton'}), choices=[('0', '0'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')])
-    # body = forms.CharField(max_length=8192, widget=forms.Textarea(attrs={'cols': '100'}))
+    headline = forms.CharField(label="Titre", max_length=128, widget=forms.TextInput(attrs={'size' : '100px'}))
+    rating = forms.ChoiceField(label="Note", widget=forms.RadioSelect(attrs={'class' : 'radioButton'}), choices=[('0', '0'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')])
+    body = forms.CharField(label="Description", max_length=8192, widget=forms.Textarea(attrs={'cols': '100'}))
+
+
 
     class Meta:
         model = Review
-        fields = ("headline", "rating", "body")
+        fields = ("headline", "rating" ,"body")
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_method = 'post'
-        self.helper.layout = Layout(
-                InlineRadios('rating')
-        )
