@@ -47,7 +47,7 @@ class TicketForm(forms.ModelForm):
 
 class ReviewForm(forms.ModelForm):
     # headline = forms.CharField(max_length=128, widget=forms.TextInput(attrs={'size' : '100px'}))
-    rating = forms.ChoiceField(widget=forms.RadioSelect(attrs={'class' : 'form-check form-check-inline'}), choices=[('0', '0'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')])
+    rating = forms.ChoiceField(widget=forms.RadioSelect(attrs={'class' : 'radioButton'}), choices=[('0', '0'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')])
     # body = forms.CharField(max_length=8192, widget=forms.Textarea(attrs={'cols': '100'}))
 
     class Meta:

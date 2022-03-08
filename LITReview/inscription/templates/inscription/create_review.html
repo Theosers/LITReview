@@ -1,10 +1,13 @@
 {% extends 'inscription/base.html' %}
 {% block content %}
+
+
+
 <div class="d-flex flex-column" style="width:90%;">
     <h1 class="text-center mb-5">Créer une critique</h1>
 
     <form method="post" enctype="multipart/form-data">>
-        <div class="border p-3">
+        <div class="border p-3" >
             {% load crispy_forms_tags %}
             {{ ticket_form|crispy }}
             {% csrf_token %}
@@ -14,9 +17,9 @@
             <h1>critique</h1>
             {% load crispy_forms_tags %}
 
-            {% crispy review_form %}
+            <div style="display: inline-block;">{% crispy review_form %}</div>
             {% csrf_token %}
-            <button type="submit" class="btn btn-primary mt-3">Envoyer</button>
+            <button type="submit" class="btn btn-primary mt-3 d-block">Envoyer</button>
         </div>
     </form>
 
