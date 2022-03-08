@@ -9,10 +9,8 @@ In a new virtual environment, install all dependency :
 ```
 pip install -r requirements.txt
 ```
-To execute BS :
-
-launch the launcher.sh 
+To execute the application in a shell :
 
 ```
-sh launcher.sh
+python manage.py runserver
 ```
